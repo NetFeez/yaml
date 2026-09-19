@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "composite": true,
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "lib": ["ESNext"],
+        "types": [],
+        "strict": true,
+        "declaration": true,
+        "sourceMap": true,
+        "outDir": "dist",
+        "rootDir": "src"
+    },
+    "include": [ "./src/**/*.ts" ]
+}

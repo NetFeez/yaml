@@ -1,0 +1,44 @@
+{
+  "name": "@netfeez/yaml",
+  "version": "0.1.0",
+  "description": "An environment-agnostic YAML document editor for TypeScript.",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "NetFeez",
+    "url": "https://netfeez.github.io",
+    "email": "netfeez.dev@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/netfeez/yaml.git"
+  },
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "npx tsc -p tsconfig.yaml.json",
+    "dev": "npx tsc --watch -p tsconfig.yaml.json",
+    "test": "npx tsc --project tsconfig.test.json && node --import ./test/_register.mjs dist-test/test/index.js",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "yaml",
+    "parser",
+    "serializer",
+    "ast",
+    "round-trip",
+    "lossless",
+    "typescript",
+    "synchronizer"
+  ],
+  "devDependencies": {
+    "@netfeez/common": "^4.2.0",
+    "@netfeez/vterm": "^1.1.0",
+    "@types/node": "^26.6.1",
+    "typescript": "^7.0.2"
+  }
+}

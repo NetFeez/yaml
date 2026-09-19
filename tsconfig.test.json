@@ -1,0 +1,14 @@
+{
+    "extends": "./tsconfig.yaml.json",
+    "compilerOptions": {
+        "types": [ "node" ],
+        "declaration": true,
+        "noEmitOnError": true,
+        "outDir": "dist-test",
+        "rootDir": ".",
+        "paths": {
+            "@TestSuite/*": ["./test/TestSuite/*"]
+        }
+    },
+    "include": ["./src/**/*.ts", "./test/**/*.ts"]
+}

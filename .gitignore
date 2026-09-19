@@ -1,0 +1,15 @@
+# Dependencies
+**/node_modules/
+
+# Build setting
+**/dist/
+**/dist-*/
+
+# Hidden files, logging and environment files
+**/.**
+**/*.log
+**/*.env
+
+# Work space setting to Project IDX
+!.vscode/
+!.gitignore
