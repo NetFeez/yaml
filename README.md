@@ -695,7 +695,8 @@ The main modules are:
 
 | Module            | Responsibility                        |
 | ----------------- | ------------------------------------- |
-| `AST.ts`          | Editable document tree and node model |
+| `AST.ts`          | Editable tree and node model (documents stay in `Document.ts`) |
+| `Document.ts`     | Document root and self-service API (`dump`/`compile`/`comments`/`apply`) |
 | `Parser.ts`       | YAML → document model                 |
 | `Serializer.ts`   | Document model → YAML                 |
 | `ScalarUtils.ts`  | Scalar resolution and quoting         |
@@ -752,6 +753,17 @@ Compiler.dump(document);
 Compiler.compile(document);
 Compiler.comments(document);
 Compiler.apply(document, value);
+```
+
+A parsed document is also self-sufficient, so the Compiler is optional for serialization work:
+
+```ts
+const document = Compiler.parse(source);
+
+document.dump();      // YAML text
+document.compile();   // plain JavaScript value
+document.comments();  // leading comment blocks keyed by path
+document.apply(value);// structure-preserving synchronization
 ```
 
 And the document itself provides editing operations:

@@ -1,6 +1,16 @@
-import { Utils } from './Utils.js';
+/**
+ * @author NetFeez <netfeez.dev@gmail.com>.
+ * @description Fluent assertion helpers built on strict equality, truthiness, instance checks and includes.
+ * @license Apache-2.0
+ */
 
 export class Assertion<T> {
+    /**
+     * Creates an assertion over an actual value.
+     * @param actual - The value under test.
+     * @param context - The test context used to report failures.
+     * @param description - An optional label included in failure messages.
+     */
     constructor(
         private readonly actual: T,
         private readonly context: Assertion.context,

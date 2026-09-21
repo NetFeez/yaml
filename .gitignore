@@ -4,6 +4,7 @@
 # Build setting
 **/dist/
 **/dist-*/
+**/*.tsbuildinfo
 
 # Hidden files, logging and environment files
 **/.**

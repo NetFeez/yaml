@@ -1,3 +1,9 @@
+/**
+ * @author NetFeez <netfeez.dev@gmail.com>.
+ * @description Node module resolution hook that maps `@TestSuite/*` imports to their compiled `dist-test` output.
+ * @license Apache-2.0
+ */
+
 const PREFIX = '@TestSuite/';
 const BASE = new URL('../dist-test/test/TestSuite/', import.meta.url);
 

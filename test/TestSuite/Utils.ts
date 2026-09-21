@@ -1,3 +1,9 @@
+/**
+ * @author NetFeez <netfeez.dev@gmail.com>.
+ * @description Utility helpers for the test framework: text wrapping, argument customization for logging and async event helpers.
+ * @license Apache-2.0
+ */
+
 export class Utils {
     /**
      * Splits the given text into multiple lines based on the specified maximum length.
@@ -12,6 +18,7 @@ export class Utils {
         const regex = new RegExp(`(.{1,${maxLength}})(?:\\s|$|\\n)`, 'g');
         return description.match(regex)?.map(line => line.trim()) || [description];
     }
+
     /**
      * Customizes the arguments for logging by applying specific formatting based on their types. This method processes each argument and formats it accordingly:
      * - Strings are split into multiple lines if they exceed a certain length and prefixed for better readability.
@@ -22,6 +29,7 @@ export class Utils {
      * The customized arguments are returned as an array of formatted strings or values ready for logging.
      * 
      * @param args - An array of arguments to be customized for logging.
+     * @param logPrefix - The prefix prepended to wrapped strings in multi-line logging.
      * @returns An array of customized arguments formatted for logging.
      */
     public static customizeArgs(args: any[], logPrefix: string = ''): any[] {
@@ -35,7 +43,8 @@ export class Utils {
                 return Utils.splitTexts(JSON.stringify(arg, null, 4), 40).join(`\n${logPrefix} `);
             } return arg;
         }); return args;
-    }    
+    }
+
     /**
      * Asynchronously waits for a specific event to occur by executing the provided executor function.
      * The executor function is expected to call a done callback when the event occurs, passing any relevant result.
@@ -45,10 +54,7 @@ export class Utils {
      * @param timeout - An optional timeout in milliseconds after which the promise will be rejected if the event has not occurred (default is -1, meaning no timeout).
      * @returns A promise that resolves with the result passed to the done callback when the event occurs, or rejects if an error occurs or if the timeout is reached.
      */
-    public static async awaitEvent<R extends any>(
-        executor: Utils.AsyncEvent.Exec<R>,
-        timeout: number = -1
-    ): Promise<R> {
+    public static async awaitEvent<R extends any>(executor: Utils.AsyncEvent.Exec<R>, timeout: number = -1): Promise<R> {
         return new Promise<R>((resolve, reject) => {
             let timer: NodeJS.Timeout | null = null;
             let isSettled = false;
@@ -92,6 +98,7 @@ export class Utils {
             } catch (error) { safeReject(error); }
         });
     }
+
     /**
      * Asynchronously waits for a specified amount of time (in milliseconds) before resolving.
      * This method can be used in test cases to introduce delays or to wait for certain conditions to be met before proceeding with assertions or further test steps.

@@ -1,12 +1,18 @@
 /**
- * @author NetFeez <netfeez.dev@gmail.com>
+ * @author NetFeez <netfeez.dev@gmail.com>.
  * @description Shared scalar resolution, plain-string validation and scalar rendering for the YAML parser, serializer and AST factory.
  * @license Apache-2.0
  */
 
+import { Primitive } from '../ast/Contracts.js';
+
 export class ScalarUtils {
-    /** Resolves a plain YAML token to its primitive value. */
-    public static resolvePlain(token: string): string | number | boolean | null {
+    /**
+     * Resolves a plain YAML scalar string to its corresponding primitive value (string, number, boolean, null, Infinity, -Infinity, NaN).
+     * @param token - The plain scalar string to resolve.
+     * @returns The corresponding primitive value.
+     */
+    public static resolvePlain(token: string): Primitive {
         if (token === '' || token === '~' || token === 'null' || token === 'Null' || token === 'NULL') return null;
         if (token === 'true' || token === 'True' || token === 'TRUE') return true;
         if (token === 'false' || token === 'False' || token === 'FALSE') return false;
@@ -20,7 +26,11 @@ export class ScalarUtils {
         return token;
     }
 
-    /** Determines whether a string can be emitted as a plain (unquoted) YAML scalar. */
+    /**
+     * Determines whether a string can be represented as a plain YAML scalar without quoting.
+     * @param value - The string to test.
+     * @returns True if the string can be represented as a plain scalar; false otherwise.
+     */
     public static canBePlain(value: string): boolean {
         if (value === '' || /\s$/.test(value) || /^[ \t]/.test(value)) return false;
         if (/[\n\t\r\x00-\x1f]/.test(value)) return false;
@@ -29,8 +39,12 @@ export class ScalarUtils {
         return ScalarUtils.resolvePlain(value) === value;
     }
 
-    /** Renders a scalar primitive to its YAML source text with minimal quoting. */
-    public static render(value: string | number | boolean | null): string {
+    /**
+     * Renders a primitive value to its YAML scalar representation, quoting strings as necessary.
+     * @param value - The primitive value to render.
+     * @returns The YAML scalar representation of the value.
+     */
+    public static render(value: Primitive): string {
         if (value === null) return 'null';
         if (typeof value === 'boolean') return value ? 'true' : 'false';
         if (typeof value === 'number') {
@@ -42,6 +56,11 @@ export class ScalarUtils {
         return ScalarUtils.quoteString(value);
     }
 
+    /**
+     * Quotes a string for YAML output, using single quotes unless the string contains control characters, in which case double quotes are used.
+     * @param value - The string to quote.
+     * @returns The quoted string.
+     */
     private static quoteString(value: string): string {
         if (ScalarUtils.canBePlain(value)) return value;
         if (!/[\n\t\r\x00-\x1f]/.test(value)) return `'${value.replace(/'/g, "''")}'`;

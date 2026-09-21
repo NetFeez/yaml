@@ -1,3 +1,9 @@
+/**
+ * @author NetFeez <netfeez.dev@gmail.com>.
+ * @description Minimal asynchronous test suite runner with vterm logging, used by the project tests.
+ * @license Apache-2.0
+ */
+
 import { Logger } from "@netfeez/vterm";
 
 import TestContext from "./TestContext.js";
@@ -11,13 +17,19 @@ export class TestSuite {
     protected vName: string;
     protected vTests: TestSuite.TestEntry[] = [];
 
-    public constructor(
-        name: string
-    ) {
+    /**
+     * Creates a test suite with a cleaned name and its own logger.
+     * @param name - The display name of the suite (trimmed and lower-cased).
+     */
+    public constructor(name: string) {
         this.vName = TestSuite.cleanName(name);
         this.logger = new Logger({ name: this.prefix });
     }
+
+    /** The trimmed, lower-cased name of the suite. */
     public get name(): string { return this.vName; }
+
+    /** The logger prefix used for suite messages. */
     public get prefix(): string { return `suit:${this.name}`; }
 
     //
@@ -32,6 +44,7 @@ export class TestSuite {
     public add(description: string, test: TestSuite.Test): void {
         this.vTests.push({ description, test });
     }
+
     /**
      * Runs a series of test cases defined in an array of TestSuite.Test functions. Each test case is executed sequentially, and the method waits for each test to complete before starting the next one. The method returns a promise that resolves to true if all tests passed, or false if any test failed.
      * @param tests - An array of test functions, where each function is a TestSuite.Test that defines a test case to be executed. Each test function is executed with a TestContext as its `this` context and as an argument, allowing it to log messages and mark the test as done.
@@ -44,6 +57,7 @@ export class TestSuite {
         }
         return allPassed;
     }
+    
     /**
      * Defines a test case with a description and a test function. The test function is executed with a TestContext that provides methods for logging and marking the test as done.
      * The method logs the start of the test, executes the test function, and handles any errors that may occur during the execution.

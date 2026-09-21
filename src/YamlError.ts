@@ -1,5 +1,5 @@
 /**
- * @author NetFeez <netfeez.dev@gmail.com>
+ * @author NetFeez <netfeez.dev@gmail.com>.
  * @description Error type for YAML parsing failures, distinguishing unsupported features from syntax errors.
  * @license Apache-2.0
  */
@@ -7,7 +7,6 @@
 export class YamlError extends Error {
     public readonly line: number | null;
     public readonly unsupported: boolean;
-    public readonly status = 422;
 
     /**
      * Creates a new YamlError instance.
